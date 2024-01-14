@@ -3,13 +3,18 @@ import '../App.css'
 
 const Home = () => {
   const pay =async ()=> {
-    try{
-      const {data} = await axios.post('http://localhost:5000/api/bkash/payment/create',{
-        amount: 500,orderId: 1},{withCredentials:true})
-        console.log(data)
-    }catch(error){
+    // event.preventDefault(); /
+    console.log("first")
+    try {
+      const { data } = await axios.post('http://localhost:5000/api/bkash/payment/create', { amount: 50, orderId: 1 }, { withCredentials: true })
+      console.log(window.location.href)
+      window.location.href = data.bkashURL
 
-    }
+  } catch (error) {
+      console.log(error.response.data)
+  }
+
+
   }
     return (
         <div className="root">

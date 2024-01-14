@@ -11,7 +11,7 @@ class middleware {
     },{
         headers: {
             "Content-Type":	"application/json",
-            Accept: "application/json",
+            "Accept": "application/json",
             username: process.env.bkash_username,
             password: process.env.bkash_password
         }
