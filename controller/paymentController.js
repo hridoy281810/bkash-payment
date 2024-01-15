@@ -63,6 +63,30 @@ class paymentController {
            }
         }
     }
+    refund = async(req,res)=>{
+        const {trxID} = req.param;
+        try {
+            const payment = await paymentModel.findOne({trxID})
+            const {data} = await axios.post(process.env.bkash_refund_transaction_url, {
+                paymentID: payment.paymentID,
+                amount: payment.amount,
+                trxID,
+                sku: 'payment',
+                reason: "cashback"
+            },{
+                headers: await this.bkash_headers()
+            })
+            if(data && data.statusCode === '0000'){
+                // const userId = globals.get('userId')
+          
+            return res.status(200).json({message: "refund success"})
+            } else{
+                return res.status(404).json({error: "refund fail"})
+            }
+        } catch (error) {
+           return res.status(404).json({error: "refund fail"})
+        }
+    }
 
 }
 module.exports = new paymentController();
